@@ -9,18 +9,23 @@ from PIL import Image, ImageTk
     variable_window = canvas.create_window(x + 100, y, window=variable_label, anchor="w")
     return variable_label"""
 
-def agregar_texto_y_label(canvas, x, y, texto, nombre_variable, negritas=False):
+def agregar_texto_y_label(canvas, x, y, texto, nombre_variable, unidad_medida=None, negritas=False):
     # Determinar el estilo de la fuente según si se quiere en negritas o no
     estilo_fuente = "Arial 14 bold" if negritas else "Arial 14"
     
     # Crear y colocar el texto estático
-    canvas.create_text(x, y, text=texto, fill="black", font=estilo_fuente) 
+    texto_id = canvas.create_text(x, y, text=texto, fill="black", font=estilo_fuente) 
     
     # Crear el Label para los datos dinámicos
     variable_label = tk.Label(canvas, textvariable=nombre_variable, bg="white", font=estilo_fuente, fg="black" )
     variable_window = canvas.create_window(x + 100, y, window=variable_label, anchor="w")
     
+    # Si se proporcionó una unidad de medida, crear y colocar el texto para la unidad
+    if unidad_medida:
+        canvas.create_text(x + 150, y, text=unidad_medida, fill="black", font=estilo_fuente)
+    
     return variable_label
+
 
 def crear_titulo_borde_redondeado(canvas, x1, y1, x2, y2, texto, radio=10, ancho_borde=2, color_borde="yellow", color_fondo="yellow", color_texto="black"):
     # Dibujar las esquinas redondeadas
